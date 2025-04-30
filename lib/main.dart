@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
         BlocProvider<ChartBloc>(create: (context) => ChartBloc()),
       ],
       child: MaterialApp(
-        title: 'CSV Visualizer',
+        debugShowCheckedModeBanner: false,
+        title: 'CSVIZ - CSV Visualizer',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,

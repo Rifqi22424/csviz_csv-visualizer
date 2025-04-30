@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('CSV Visualizer'), elevation: 2),
+      appBar: AppBar(title: const Text('CSVIZ - CSV Visualizer'), elevation: 2),
       body: BlocConsumer<CsvBloc, CsvState>(
         listener: (context, state) {
           if (state is CsvErrorState) {
@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 30),
                   const Text(
-                    'CSV Visualizer',
+                    'CSVIZ - CSV Visualizer',
                     style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 16),

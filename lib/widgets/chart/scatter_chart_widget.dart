@@ -17,74 +17,87 @@ class ScatterChartWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final spots = _getSpots();
 
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: ScatterChart(
-        ScatterChartData(
-          scatterSpots: spots,
-          minX: minX,
-          maxX: maxX,
-          minY: minY,
-          maxY: maxY,
-          borderData: FlBorderData(
-            show: true,
-            border: Border.all(color: Colors.grey.shade400),
-          ),
-          gridData: FlGridData(
-            show: true,
-            getDrawingHorizontalLine:
-                (value) => FlLine(color: Colors.grey.shade300, strokeWidth: 1),
-            getDrawingVerticalLine:
-                (value) => FlLine(color: Colors.grey.shade300, strokeWidth: 1),
-          ),
-          titlesData: FlTitlesData(
-            show: true,
-            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            bottomTitles: AxisTitles(
-              axisNameWidget: Text(
-                xAxisColumn,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              sideTitles: SideTitles(
-                showTitles: true,
-                reservedSize: 30,
-                getTitlesWidget: (value, meta) {
-                  return Text(
-                    value.toStringAsExponential(1),
-                    style: const TextStyle(fontSize: 10),
-                  );
-                },
-              ),
+    if (spots.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.scatter_plot, size: 48, color: Colors.grey),
+            SizedBox(height: 16),
+            Text(
+              'No data to display',
+              style: TextStyle(fontSize: 16, color: Colors.grey),
             ),
-            leftTitles: AxisTitles(
-              axisNameWidget: Text(
-                yAxisColumn,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              sideTitles: SideTitles(
-                showTitles: true,
-                reservedSize: 40,
-                getTitlesWidget: (value, meta) {
-                  return Text(
-                    value.toStringAsFixed(1),
-                    style: const TextStyle(fontSize: 10),
-                  );
-                },
-              ),
+          ],
+        ),
+      );
+    }
+
+    return ScatterChart(
+      ScatterChartData(
+        scatterSpots: spots,
+        minX: minX,
+        maxX: maxX,
+        minY: minY,
+        maxY: maxY,
+        borderData: FlBorderData(
+          show: true,
+          border: Border.all(color: Colors.grey.shade400),
+        ),
+        gridData: FlGridData(
+          show: true,
+          getDrawingHorizontalLine:
+              (value) => FlLine(color: Colors.grey.shade300, strokeWidth: 1),
+          getDrawingVerticalLine:
+              (value) => FlLine(color: Colors.grey.shade300, strokeWidth: 1),
+        ),
+        titlesData: FlTitlesData(
+          show: true,
+          rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          bottomTitles: AxisTitles(
+            axisNameWidget: Text(
+              xAxisColumn,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-          ),
-          scatterTouchData: ScatterTouchData(
-            enabled: true,
-            touchTooltipData: ScatterTouchTooltipData(
-              getTooltipColor: (touchedSpot) => Colors.blueGrey.shade800,
-              getTooltipItems: (touchedSpot) {
-                return ScatterTooltipItem(
-                  'X: ${touchedSpot.x.toStringAsFixed(2)}\nY: ${touchedSpot.y.toStringAsFixed(2)}',
-                  textStyle: const TextStyle(color: Colors.white),
+            sideTitles: SideTitles(
+              showTitles: true,
+              reservedSize: 30,
+              getTitlesWidget: (value, meta) {
+                return Text(
+                  value.toStringAsExponential(1),
+                  style: const TextStyle(fontSize: 10),
                 );
               },
             ),
+          ),
+          leftTitles: AxisTitles(
+            axisNameWidget: Text(
+              yAxisColumn,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            sideTitles: SideTitles(
+              showTitles: true,
+              reservedSize: 40,
+              getTitlesWidget: (value, meta) {
+                return Text(
+                  value.toStringAsFixed(1),
+                  style: const TextStyle(fontSize: 10),
+                );
+              },
+            ),
+          ),
+        ),
+        scatterTouchData: ScatterTouchData(
+          enabled: true,
+          touchTooltipData: ScatterTouchTooltipData(
+            getTooltipColor: (touchedSpot) => Colors.blueGrey.shade800,
+            getTooltipItems: (touchedSpot) {
+              return ScatterTooltipItem(
+                'X: ${touchedSpot.x.toStringAsFixed(2)}\nY: ${touchedSpot.y.toStringAsFixed(2)}',
+                textStyle: const TextStyle(color: Colors.white),
+              );
+            },
           ),
         ),
       ),

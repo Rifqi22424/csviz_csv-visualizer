@@ -120,7 +120,7 @@ class PieChartWidget extends StatelessWidget {
         if (legendData.containsKey(label)) {
           legendData[label] = legendData[label]! + value.toDouble();
         } else {
-          legendData[label] + value.toDouble();
+          legendData[label] = value.toDouble();
         }
       }
     }

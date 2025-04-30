@@ -17,88 +17,83 @@ class LineChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          Expanded(
-            child: LineChart(
-              LineChartData(
-                gridData: FlGridData(
-                  show: true,
-                  drawVerticalLine: true,
-                  getDrawingHorizontalLine: (value) {
-                    return FlLine(color: Colors.grey.shade300, strokeWidth: 1);
-                  },
-                  getDrawingVerticalLine: (value) {
-                    return FlLine(color: Colors.grey.shade300, strokeWidth: 1);
-                  },
-                ),
-                titlesData: FlTitlesData(
-                  show: true,
-                  rightTitles: AxisTitles(
-                    sideTitles: SideTitles(showTitles: true),
-                  ),
-                  topTitles: AxisTitles(
-                    sideTitles: SideTitles(showTitles: true),
-                  ),
-                  bottomTitles: AxisTitles(
-                    axisNameWidget: Text(
-                      xAxisColumn,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      reservedSize: 30,
-                      getTitlesWidget: (value, meta) {
-                        final index = value.toInt();
-                        if (index >= 0 && index < xValues.length) {
-                          return Padding(
-                            padding: EdgeInsets.only(top: 8.0),
-                            child: Text(
-                              xValues[index].toString(),
-                              style: const TextStyle(fontSize: 10),
-                            ),
-                          );
-                        }
-                        return const Text('');
-                      },
-                    ),
-                  ),
-                  leftTitles: AxisTitles(
-                    axisNameWidget: Text(
-                      yAxisColumn,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      reservedSize: 40,
-                      getTitlesWidget: (value, meta) {
-                        return Text(
-                          value.toStringAsFixed(1),
-                          style: const TextStyle(fontSize: 10),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                borderData: FlBorderData(
-                  show: true,
-                  border: Border.all(color: Colors.grey.shade400),
-                ),
-                minX: 0,
-                maxX: xValues.length.toDouble() - 1,
-                minY: minY,
-                maxY: maxY,
-                lineBarsData: getLineBarsData(),
+    return Column(
+      children: [
+        Expanded(
+          child: LineChart(
+            LineChartData(
+              gridData: FlGridData(
+                show: true,
+                drawVerticalLine: true,
+                getDrawingHorizontalLine: (value) {
+                  return FlLine(color: Colors.grey.shade300, strokeWidth: 1);
+                },
+                getDrawingVerticalLine: (value) {
+                  return FlLine(color: Colors.grey.shade300, strokeWidth: 1);
+                },
               ),
-              duration: const Duration(milliseconds: 500),
+              titlesData: FlTitlesData(
+                show: true,
+                rightTitles: AxisTitles(
+                  sideTitles: SideTitles(showTitles: true),
+                ),
+                topTitles: AxisTitles(sideTitles: SideTitles(showTitles: true)),
+                bottomTitles: AxisTitles(
+                  axisNameWidget: Text(
+                    xAxisColumn,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    reservedSize: 30,
+                    getTitlesWidget: (value, meta) {
+                      final index = value.toInt();
+                      if (index >= 0 && index < xValues.length) {
+                        return Padding(
+                          padding: EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            xValues[index].toString(),
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                        );
+                      }
+                      return const Text('');
+                    },
+                  ),
+                ),
+                leftTitles: AxisTitles(
+                  axisNameWidget: Text(
+                    yAxisColumn,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    reservedSize: 40,
+                    getTitlesWidget: (value, meta) {
+                      return Text(
+                        value.toStringAsFixed(1),
+                        style: const TextStyle(fontSize: 10),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              borderData: FlBorderData(
+                show: true,
+                border: Border.all(color: Colors.grey.shade400),
+              ),
+              minX: 0,
+              maxX: xValues.length.toDouble() - 1,
+              minY: minY,
+              maxY: maxY,
+              lineBarsData: getLineBarsData(),
             ),
+            duration: const Duration(milliseconds: 500),
           ),
-          if (seriesColumns != null && seriesColumns!.isNotEmpty)
-            _buildLegend(context),
-        ],
-      ),
+        ),
+        if (seriesColumns != null && seriesColumns!.isNotEmpty)
+          _buildLegend(context),
+      ],
     );
   }
 
