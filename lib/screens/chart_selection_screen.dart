@@ -1,6 +1,6 @@
 import 'package:csviz/blocs/chart/chart_bloc.dart';
 import 'package:csviz/blocs/csv/csv_bloc.dart';
-import 'package:csviz/helper/responsive_helper.dart';
+import 'package:csviz/helpers/responsive_helper.dart';
 import 'package:csviz/models/chart_type.dart';
 import 'package:csviz/screens/chart_display_screen.dart';
 import 'package:csviz/widgets/chart_config_dialog.dart';

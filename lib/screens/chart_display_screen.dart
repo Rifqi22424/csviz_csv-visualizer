@@ -1,8 +1,8 @@
 import 'package:csviz/blocs/chart/chart_bloc.dart';
 import 'package:csviz/blocs/csv/csv_bloc.dart';
 import 'package:csviz/blocs/export/export_bloc.dart';
-import 'package:csviz/helper/platform_helper.dart';
-import 'package:csviz/helper/responsive_helper.dart';
+import 'package:csviz/helpers/platform_helper.dart';
+import 'package:csviz/helpers/responsive_helper.dart';
 import 'package:csviz/models/chart_type.dart';
 import 'package:csviz/widgets/chart/bar_chart_widget.dart';
 import 'package:csviz/widgets/chart/line_chart_widget.dart';
