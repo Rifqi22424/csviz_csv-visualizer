@@ -1,6 +1,8 @@
 import 'package:csviz/blocs/chart/chart_bloc.dart';
 import 'package:csviz/blocs/csv/csv_bloc.dart';
 import 'package:csviz/blocs/export/export_bloc.dart';
+import 'package:csviz/helper/platform_helper.dart';
+import 'package:csviz/helper/responsive_helper.dart';
 import 'package:csviz/models/chart_type.dart';
 import 'package:csviz/widgets/chart/bar_chart_widget.dart';
 import 'package:csviz/widgets/chart/line_chart_widget.dart';
@@ -24,6 +26,13 @@ class _ChartDisplayScreenState extends State<ChartDisplayScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isPhone = ResponsiveHelper.isPhone(context);
+    bool isSupportFileSharing =
+        PlatformHelper.isWeb ||
+        PlatformHelper.isWindows ||
+        PlatformHelper.isMacOS ||
+        PlatformHelper.isLinux;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chart Visualization'),
@@ -33,11 +42,13 @@ class _ChartDisplayScreenState extends State<ChartDisplayScreen> {
             icon: Icon(Icons.save_alt),
             tooltip: 'Save chart as image',
           ),
-          IconButton(
-            onPressed: () => _captureAndShareChart(context),
-            icon: Icon(Icons.share),
-            tooltip: 'Share chart',
-          ),
+          isSupportFileSharing
+              ? SizedBox()
+              : IconButton(
+                onPressed: () => _captureAndShareChart(context),
+                icon: Icon(Icons.share),
+                tooltip: 'Share chart',
+              ),
         ],
       ),
       body: BlocListener<ExportBloc, ExportState>(
@@ -53,7 +64,7 @@ class _ChartDisplayScreenState extends State<ChartDisplayScreen> {
           }
         },
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: isPhone ? EdgeInsets.zero : const EdgeInsets.all(16.0),
           child: Column(
             children: [
               _buildChartTitle(),

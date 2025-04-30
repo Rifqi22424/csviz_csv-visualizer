@@ -33,71 +33,75 @@ class ScatterChartWidget extends StatelessWidget {
       );
     }
 
-    return ScatterChart(
-      ScatterChartData(
-        scatterSpots: spots,
-        minX: minX,
-        maxX: maxX,
-        minY: minY,
-        maxY: maxY,
-        borderData: FlBorderData(
-          show: true,
-          border: Border.all(color: Colors.grey.shade400),
-        ),
-        gridData: FlGridData(
-          show: true,
-          getDrawingHorizontalLine:
-              (value) => FlLine(color: Colors.grey.shade300, strokeWidth: 1),
-          getDrawingVerticalLine:
-              (value) => FlLine(color: Colors.grey.shade300, strokeWidth: 1),
-        ),
-        titlesData: FlTitlesData(
-          show: true,
-          rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          bottomTitles: AxisTitles(
-            axisNameWidget: Text(
-              xAxisColumn,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0, right: 16.0),
+      child: ScatterChart(
+        ScatterChartData(
+          scatterSpots: spots,
+          minX: minX,
+          maxX: maxX,
+          minY: minY,
+          maxY: maxY,
+          borderData: FlBorderData(
+            show: true,
+            border: Border.all(color: Colors.grey.shade400),
+          ),
+          gridData: FlGridData(
+            show: true,
+            getDrawingHorizontalLine:
+                (value) => FlLine(color: Colors.grey.shade300, strokeWidth: 1),
+            getDrawingVerticalLine:
+                (value) => FlLine(color: Colors.grey.shade300, strokeWidth: 1),
+          ),
+          titlesData: FlTitlesData(
+            show: true,
+            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            bottomTitles: AxisTitles(
+              axisNameWidget: Text(
+                xAxisColumn,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              sideTitles: SideTitles(
+                showTitles: true,
+                reservedSize: 30,
+                interval: 1,
+                getTitlesWidget: (value, meta) {
+                  return Text(
+                    value.toStringAsFixed(1),
+                    style: const TextStyle(fontSize: 10),
+                  );
+                },
+              ),
             ),
-            sideTitles: SideTitles(
-              showTitles: true,
-              reservedSize: 30,
-              getTitlesWidget: (value, meta) {
-                return Text(
-                  value.toStringAsExponential(1),
-                  style: const TextStyle(fontSize: 10),
+            leftTitles: AxisTitles(
+              axisNameWidget: Text(
+                yAxisColumn,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              sideTitles: SideTitles(
+                showTitles: true,
+                reservedSize: 40,
+                getTitlesWidget: (value, meta) {
+                  return Text(
+                    value.toStringAsFixed(1),
+                    style: const TextStyle(fontSize: 10),
+                  );
+                },
+              ),
+            ),
+          ),
+          scatterTouchData: ScatterTouchData(
+            enabled: true,
+            touchTooltipData: ScatterTouchTooltipData(
+              getTooltipColor: (touchedSpot) => Colors.blueGrey.shade800,
+              getTooltipItems: (touchedSpot) {
+                return ScatterTooltipItem(
+                  'X: ${touchedSpot.x.toStringAsFixed(2)}\nY: ${touchedSpot.y.toStringAsFixed(2)}',
+                  textStyle: const TextStyle(color: Colors.white),
                 );
               },
             ),
-          ),
-          leftTitles: AxisTitles(
-            axisNameWidget: Text(
-              yAxisColumn,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            sideTitles: SideTitles(
-              showTitles: true,
-              reservedSize: 40,
-              getTitlesWidget: (value, meta) {
-                return Text(
-                  value.toStringAsFixed(1),
-                  style: const TextStyle(fontSize: 10),
-                );
-              },
-            ),
-          ),
-        ),
-        scatterTouchData: ScatterTouchData(
-          enabled: true,
-          touchTooltipData: ScatterTouchTooltipData(
-            getTooltipColor: (touchedSpot) => Colors.blueGrey.shade800,
-            getTooltipItems: (touchedSpot) {
-              return ScatterTooltipItem(
-                'X: ${touchedSpot.x.toStringAsFixed(2)}\nY: ${touchedSpot.y.toStringAsFixed(2)}',
-                textStyle: const TextStyle(color: Colors.white),
-              );
-            },
           ),
         ),
       ),

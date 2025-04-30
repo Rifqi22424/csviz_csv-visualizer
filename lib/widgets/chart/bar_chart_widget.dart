@@ -18,98 +18,101 @@ class BarChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: BarChart(
-            BarChartData(
-              alignment: BarChartAlignment.spaceAround,
-              maxY: maxY,
-              minY: 0,
-              groupsSpace: 20,
-              barTouchData: BarTouchData(
-                touchTooltipData: BarTouchTooltipData(
-                  getTooltipColor: (group) => Colors.grey.shade800,
-                  getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                    String xValue = xValues[groupIndex].toString();
-                    String yValue = rod.toY.toStringAsFixed(2);
-                    String seriesName =
-                        rodIndex == 0
-                            ? yAxisColumn
-                            : seriesColumns![rodIndex - 1];
-                    return BarTooltipItem(
-                      '$seriesName\n$xValue: $yValue',
-                      const TextStyle(color: Colors.white),
-                    );
-                  },
-                ),
-              ),
-              titlesData: FlTitlesData(
-                show: true,
-                rightTitles: AxisTitles(
-                  sideTitles: SideTitles(showTitles: true),
-                ),
-                topTitles: AxisTitles(
-                  sideTitles: SideTitles(showTitles: true),
-                ),
-                bottomTitles: AxisTitles(
-                  axisNameWidget: Text(
-                    xAxisColumn,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    reservedSize: 30,
-                    getTitlesWidget: (value, meta) {
-                      final index = value.toInt();
-                      if (index >= 0 && index < xValues.length) {
-                        return Padding(
-                          padding: EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            xValues[index].toString(),
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                        );
-                      }
-                      return const Text('');
-                    },
-                  ),
-                ),
-                leftTitles: AxisTitles(
-                  axisNameWidget: Text(
-                    yAxisColumn,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    reservedSize: 40,
-                    getTitlesWidget: (value, meta) {
-                      return Text(
-                        value.toStringAsFixed(1),
-                        style: const TextStyle(fontSize: 10),
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0, right: 16.0),
+      child: Column(
+        children: [
+          Expanded(
+            child: BarChart(
+              BarChartData(
+                alignment: BarChartAlignment.spaceAround,
+                maxY: maxY,
+                minY: 0,
+                groupsSpace: 20,
+                barTouchData: BarTouchData(
+                  touchTooltipData: BarTouchTooltipData(
+                    getTooltipColor: (group) => Colors.grey.shade800,
+                    getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                      String xValue = xValues[groupIndex].toString();
+                      String yValue = rod.toY.toStringAsFixed(2);
+                      String seriesName =
+                          rodIndex == 0
+                              ? yAxisColumn
+                              : seriesColumns![rodIndex - 1];
+                      return BarTooltipItem(
+                        '$seriesName\n$xValue: $yValue',
+                        const TextStyle(color: Colors.white),
                       );
                     },
                   ),
                 ),
+                titlesData: FlTitlesData(
+                  show: true,
+                  rightTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  topTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  bottomTitles: AxisTitles(
+                    axisNameWidget: Text(
+                      xAxisColumn,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 30,
+                      getTitlesWidget: (value, meta) {
+                        final index = value.toInt();
+                        if (index >= 0 && index < xValues.length) {
+                          return Padding(
+                            padding: EdgeInsets.only(top: 8.0),
+                            child: Text(
+                              xValues[index].toString(),
+                              style: const TextStyle(fontSize: 10),
+                            ),
+                          );
+                        }
+                        return const Text('');
+                      },
+                    ),
+                  ),
+                  leftTitles: AxisTitles(
+                    axisNameWidget: Text(
+                      yAxisColumn,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 40,
+                      getTitlesWidget: (value, meta) {
+                        return Text(
+                          value.toStringAsFixed(1),
+                          style: const TextStyle(fontSize: 10),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                borderData: FlBorderData(
+                  show: true,
+                  border: Border.all(color: Colors.grey.shade400),
+                ),
+                gridData: FlGridData(
+                  show: true,
+                  getDrawingHorizontalLine:
+                      (value) =>
+                          FlLine(color: Colors.grey.shade400, strokeWidth: 1),
+                ),
+                barGroups: getBarGroups(),
               ),
-              borderData: FlBorderData(
-                show: true,
-                border: Border.all(color: Colors.grey.shade400),
-              ),
-              gridData: FlGridData(
-                show: true,
-                getDrawingHorizontalLine:
-                    (value) =>
-                        FlLine(color: Colors.grey.shade400, strokeWidth: 1),
-              ),
-              barGroups: getBarGroups(),
+              duration: const Duration(microseconds: 500),
             ),
-            duration: const Duration(microseconds: 500),
           ),
-        ),
-        if (seriesColumns != null && seriesColumns!.isNotEmpty)
-          _buildLegend(context),
-      ],
+          if (seriesColumns != null && seriesColumns!.isNotEmpty)
+            _buildLegend(context),
+        ],
+      ),
     );
   }
 
@@ -147,6 +150,7 @@ class BarChartWidget extends StatelessWidget {
             toY: yValues[index],
             color: colors[0],
             width: hasMultipleSeries ? 8 : 16,
+            borderRadius: BorderRadius.circular(4),
           ),
         );
       }
