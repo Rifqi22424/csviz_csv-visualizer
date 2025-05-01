@@ -17,9 +17,7 @@ class PieChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final bool showValues = additionalConfig?['showValues'] ?? true;
     final bool showLegend = additionalConfig?['showLegend'] ?? true;
-
     final sections = _getSections();
 
     return Column(

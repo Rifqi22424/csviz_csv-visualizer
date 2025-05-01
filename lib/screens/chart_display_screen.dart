@@ -70,13 +70,15 @@ class _ChartDisplayScreenState extends State<ChartDisplayScreen> {
               _buildChartTitle(),
               const SizedBox(height: 24),
               Expanded(
-                child: Screenshot(
-                  controller: _screenshotController,
-                  child: Card(
-                    elevation: 4,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: _buildChart(),
+                child: Center(
+                  child: Screenshot(
+                    controller: _screenshotController,
+                    child: Card(
+                      elevation: 4,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: _buildChart(),
+                      ),
                     ),
                   ),
                 ),

@@ -21,7 +21,7 @@ class ResponsiveHelper {
 
   static int responsiveAxisCountGrid(BuildContext context) {
     if (isDesktop(context)) {
-      return 5;
+      return 4;
     } else if (isTablet(context)) {
       return 3;
     } else {

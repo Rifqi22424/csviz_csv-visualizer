@@ -1,7 +1,8 @@
 import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:universal_html/html.dart' as html;
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:flutter_image_gallery_saver/flutter_image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -17,16 +18,18 @@ class ChartExportService {
         html.Url.revokeObjectUrl(url);
         return 'Download Succes (Web)';
       } else if (Platform.isAndroid || Platform.isIOS) {
-        final status = await Permission.storage.request();
+        final plugin = DeviceInfoPlugin();
+        final android = await plugin.androidInfo;
+
+        final status =
+            android.version.sdkInt < 33
+                ? await Permission.storage.request()
+                : PermissionStatus.granted;
         if (!status.isGranted) {
           throw Exception('Storage permission denied');
         }
 
-        await ImageGallerySaver.saveImage(
-          bytes,
-          name: fileName.replaceAll(RegExp(r'[^\w\s\-.]'), ''),
-          quality: 100,
-        );
+        await FlutterImageGallerySaver.saveImage(bytes);
 
         final directory = await getApplicationDocumentsDirectory();
         String path = '${directory.path}/$fileName.png';
